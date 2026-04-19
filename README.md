@@ -24,3 +24,20 @@ A professional-grade web application built for detecting deepfake videos using a
 ---
 
 ## 📂 Project Structure
+deepfake-detection-app/
+│
+├── backend/
+│   ├── main.py          # FastAPI server
+│   ├── model.py         # CNN model loading & inference
+│   └── utils.py         # Helper functions
+│
+├── frontend/
+│   ├── index.html       # Main UI
+│   ├── style.css        # Styling
+│   └── script.js        # Upload & progress logic
+│
+├── models/
+│   └── deepfake_cnn.h5  # Trained model file
+│
+├── requirements.txt     # Python dependencies
+└── README.md
