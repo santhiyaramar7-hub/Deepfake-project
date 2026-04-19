@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Deepfake AI Detector</title>
+
+<style>
+/* ===== GLOBAL ===== */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #020617, #0f172a);
+    color: white;
+}
+
+/* ===== NAVBAR ===== */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 40px;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+}
+
+.logo {
+    font-weight: bold;
+    font-size: 20px;
+    color: #38bdf8;
+}
+
+.nav-links a {
+    margin-left: 20px;
+    text-decoration: none;
+    color: #cbd5f5;
+}
+
+/* ===== MAIN CONTAINER ===== */
+.container {
+    text-align: center;
+    margin-top: 60px;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 36px;
+}
+
+.subtitle {
+    color: #94a3b8;
+    margin-bottom: 30px;
+}
+
+/* ===== UPLOAD BOX ===== */
+.upload-box {
+    max-width: 500px;
+    margin: auto;
+    background: rgba(255,255,255,0.05);
+    padding: 30px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.upload-label {
+    display: block;
+    padding: 30px;
+    border: 2px dashed #38bdf8;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.upload-label:hover {
+    background: rgba(56,189,248,0.1);
+}
+
+video {
+    width: 100%;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+/* ===== BUTTON ===== */
+button {
+    margin-top: 20px;
+    padding: 12px 25px;
+    border-radius: 10px;
+    border: none;
+    background: #22c55e;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #16a34a;
+}
+
+/* ===== LOADER ===== */
+.loader {
+    border: 5px solid #1e293b;
+    border-top: 5px solid #38bdf8;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    margin: 20px auto;
+    animation: spin 1s linear infinite;
+    display: none;
+}
+
+@keyframes spin {
+    100% { transform: rotate(360deg); }
+}
+
+/* ===== RESULT ===== */
+.result-box {
+    margin-top: 30px;
+    padding: 20px;
+    border-radius: 15px;
+    background: rgba(255,255,255,0.05);
+}
+
+.real {
+    color: #22c55e;
+    font-size: 24px;
+}
+
+.fake {
+    color: #ef4444;
+    font-size: 24px;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+    text-align: center;
+    margin-top: 60px;
+    padding: 15px;
+    color: #64748b;
+}
+</style>
+
+</head>
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="logo">Deepfake AI</div>
+    <div class="nav-links">
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+    </div>
+</div>
+
+<!-- MAIN -->
+<div class="container">
+    <h1>🎥 Deepfake Video Detection</h1>
+    <p class="subtitle">Upload a video and let AI detect if it's Real or Fake</p>
+
+    <form method="POST" enctype="multipart/form-data" class="upload-box">
+        
+        <input type="file" name="file" id="fileInput" accept="video/*" required>
+
+        <label for="fileInput" class="upload-label">
+            📂 Drag & Drop or Click to Upload Video
+        </label>
+
+        <video id="preview" controls style="display:none;"></video>
+
+        <button type="submit">Analyze Video</button>
+    </form>
+
+    <div id="loader" class="loader"></div>
+
+    <!-- RESULT (Flask will inject) -->
+    {% if result %}
+    <div class="result-box">
+        <h2 class="{{ result|lower }}">Result: {{ result }}</h2>
+        <p>Confidence: {{ confidence }}%</p>
+    </div>
+    {% endif %}
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    © 2026 Deepfake AI Detection System
+</div>
+
+<script>
+// ===== VIDEO PREVIEW =====
+const input = document.getElementById('fileInput');
+const preview = document.getElementById('preview');
+const loader = document.getElementById('loader');
+
+input.onchange = () => {
+    const file = input.files[0];
+    const url = URL.createObjectURL(file);
+
+    preview.src = url;
+    preview.style.display = "block";
+};
+
+// ===== LOADER ON SUBMIT =====
+document.querySelector("form").onsubmit = () => {
+    loader.style.display = "block";
+};
+</script>
+
+</body>
+</html>
